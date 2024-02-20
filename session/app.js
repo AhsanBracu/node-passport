@@ -40,7 +40,11 @@ app.use(session({
 app.get('/', (req, res, next) => {
   console.log("r", req.session.id);
   console.log("r", req.headers.cookie);
-  res.send("Welcome to express session");
+  if (req.session.viewCount) {
+    req.session.viewCount++;
+  } else
+    req.session.viewCount = 1;
+  res.send(`<h1> You have visited this page ${req.session.viewCount} times.</h1>`);
 })
 
 app.listen(3000, () => {
